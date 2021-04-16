@@ -32,8 +32,9 @@ class SpeedTest_Screen(Screen):
         g.speed_test_src, g.speed_test_host, g.speed_test_dl, g.speed_test_up = speedtest.main()
         self.ret_speedtest.text = g.speed_test_src+"\n\n"+g.speed_test_host+"\n\n"+g.speed_test_dl+"\n\n"+g.speed_test_up
         self.loading_button.active = False
-        self.next_button.opacity = 1
-        self.next_button.disabled = 0
+        self.req_button.opacity = 1
+        self.req_button.disabled = 0
+
     pass
 
 class MainApp(MDApp):
