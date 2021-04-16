@@ -1,0 +1,30 @@
+#:kivy 2.0.0
+
+#:include speedtest_screen.kv
+
+Screen:
+    # Top Tool Bar
+    MDToolbar:
+        id: toolbar
+        # title: "Main"
+        elevation: 10
+        anchor_title: "center"
+        
+        size_hint: 1,.1
+        pos_hint: {"top":1}
+
+    NavigationLayout:
+        
+        # Define screens
+        ScreenManager:
+            id: screen_manager
+            size_hint: 1,1
+            poshint: {"top":1,"left":1}
+            
+            SpeedTest_Screen:
+                name: "speedtest_screen"
+                id: speedtest_screen
+                x: toolbar.height
+                size_hint_y: 1.0 - toolbar.height/root.height
+  
+       
