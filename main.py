@@ -52,6 +52,7 @@ class MainApp(MDApp):
                 else:
                     print ("Did not get all permissions")
             request_permissions([Permission.INTERNET, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
-        print("Platform: Not Android")
+        else:
+            print("Platform: Not Android")
 if __name__ == "__main__":
     MainApp().run()
