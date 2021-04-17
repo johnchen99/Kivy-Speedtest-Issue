@@ -1,4 +1,4 @@
-import threading, speedtest, portforwardlib, global_var as g
+import threading, speedtest, global_var as g
 
 from kivymd.app import MDApp
 from kivy.lang import Builder
