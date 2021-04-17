@@ -45,7 +45,7 @@ class MainApp(MDApp):
         # print(portforwardlib.forwardPort(22,22,None,None,True,"TCP",9999, None,True))
         if platform =='android':
             print("Platform: Android")
-            from android.permission import Permission, request_permissions
+            from android.permissions import Permission, request_permissions
             def callback (permission, results):
                 if all([res for res in results]):
                     print("Got all permissions")
