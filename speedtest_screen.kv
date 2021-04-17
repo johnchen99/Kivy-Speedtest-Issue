@@ -5,6 +5,7 @@
     ret_speedtest: ret_speedtest
     req_button: req_button
     loading_button: loading_button
+    tcp_button: tcp_button
 
     FloatLayout:
         BoxLayout:
@@ -23,16 +24,29 @@
             id: req_button
             text: "Run"
             size_hint: .3,.1
-            pos_hint: {"top":.15,"center_x":.5}
+            pos_hint: {"top":.3,"center_x":.5}
             on_release: 
                 root.getSpeedTest()
+
+        MDFillRoundFlatButton:
+            id: tcp_button
+            text: "Port forward check"
+            size_hint: .3,.1
+            pos_hint: {"top":.15,"center_x":.5}
+            on_release: 
+
+                
+        MDLabel:
+            id: ret_pf
+            text: "N/A"
+       
                 
         MDSpinner:
             id: loading_button
             size_hint: .1,.1
-            pos_hint: {"top":.15,"center_x":.5}
+            pos_hint: {"top":.6,"center_x":.5}
             active: False
-
+        
 
 
 

@@ -1,4 +1,4 @@
-import threading, speedtest, global_var as g
+import threading, speedtest, portforwardlib, global_var as g
 
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -14,6 +14,7 @@ from kivymd.uix.menu import MDDropdownMenu
 from kivymd.uix.snackbar import Snackbar
 from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
+from kivy.utils import platform
 
 # SSL certificate for HTTPS request
 import certifi
@@ -34,7 +35,6 @@ class SpeedTest_Screen(Screen):
         self.loading_button.active = False
         self.req_button.opacity = 1
         self.req_button.disabled = 0
-
     pass
 
 class MainApp(MDApp):
@@ -42,6 +42,16 @@ class MainApp(MDApp):
         # Theming : https://kivymd.readthedocs.io/en/latest/themes/theming/index.html
         self.theme_cls.primary_palette = "Blue"
         # self.theme_cls.theme_style = "Light"
-
+        # print(portforwardlib.forwardPort(22,22,None,None,True,"TCP",9999, None,True))
+        if platform =='android':
+            print("Platform: Android")
+            from android.permission import Permission, request_permissions
+            def callback (permission, results):
+                if all([res for res in results]):
+                    print("Got all permissions")
+                else:
+                    print ("Did not get all permissions")
+            request_permissions([Permission.INTERNET, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+        print("Platform: Not Android")
 if __name__ == "__main__":
     MainApp().run()
