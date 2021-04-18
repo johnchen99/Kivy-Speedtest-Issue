@@ -16,10 +16,6 @@ from kivy.uix.screenmanager import ScreenManager, Screen
 from kivy.core.window import Window
 from kivy.utils import platform
 
-# SSL certificate for HTTPS request
-import certifi
-import os
-os.environ['SSL_CERT_FILE'] = certifi.where()
 
 class SpeedTest_Screen(Screen):
     def getSpeedTest(self):
@@ -39,6 +35,10 @@ class SpeedTest_Screen(Screen):
 
 class MainApp(MDApp):
     def build(self):
+        # SSL certificate for HTTPS request
+        import certifi
+        import os
+        os.environ['SSL_CERT_FILE'] = certifi.where()
         # Theming : https://kivymd.readthedocs.io/en/latest/themes/theming/index.html
         self.theme_cls.primary_palette = "Blue"
         # self.theme_cls.theme_style = "Light"
@@ -51,7 +51,7 @@ class MainApp(MDApp):
                     print("Got all permissions")
                 else:
                     print ("Did not get all permissions")
-            request_permissions([Permission.INTERNET, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+            request_permissions([Permission.INTERNET, Permission.ACCESS_NETWORK_STATE, Permission.ACCESS_WIFI_STATE, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
         print("Platform: Not Android")
 if __name__ == "__main__":
     MainApp().run()
