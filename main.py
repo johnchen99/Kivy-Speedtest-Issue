@@ -1,4 +1,4 @@
-import threading, speedtest, portforwardlib, global_var as g
+import threading, speedtest, global_var as g
 
 from kivymd.app import MDApp
 from kivy.lang import Builder
@@ -46,12 +46,13 @@ class MainApp(MDApp):
         if platform =='android':
             print("Platform: Android")
             from android.permissions import Permission, request_permissions
+            request_permissions([Permission.INTERNET, Permission.ACCESS_NETWORK_STATE, Permission.ACCESS_WIFI_STATE, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
+
             def callback (permission, results):
                 if all([res for res in results]):
                     print("Got all permissions")
                 else:
                     print ("Did not get all permissions")
-            request_permissions([Permission.INTERNET, Permission.ACCESS_NETWORK_STATE, Permission.ACCESS_WIFI_STATE, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
         print("Platform: Not Android")
 if __name__ == "__main__":
     MainApp().run()
