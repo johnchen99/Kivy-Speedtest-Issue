@@ -53,6 +53,7 @@ class MainApp(MDApp):
                     print("Got all permissions")
                 else:
                     print ("Did not get all permissions")
+                    
         print("Platform: Not Android")
 if __name__ == "__main__":
     MainApp().run()
