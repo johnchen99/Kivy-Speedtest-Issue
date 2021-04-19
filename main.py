@@ -26,7 +26,12 @@ class SpeedTest_Screen(Screen):
         print(f"ret : {g.speed_test_src}, {g.speed_test_host}, {g.speed_test_dl}, {g.speed_test_up}")
 
     def retSpeedTest(self):
-        g.speed_test_src, g.speed_test_host, g.speed_test_dl, g.speed_test_up = speedtest.main()
+        #g.speed_test_src, g.speed_test_host, g.speed_test_dl, g.speed_test_up = speedtest.main()
+        st = speedtest.Speedtest()
+        print('Download Speed:',st.download()) #download speed
+        print('Upload Speed:',st.upload()) #upload speed
+        # g.speed_test_dl = st.download()
+        # g.speed_test_up = st.upload()
         self.ret_speedtest.text = g.speed_test_src+"\n\n"+g.speed_test_host+"\n\n"+g.speed_test_dl+"\n\n"+g.speed_test_up
         self.loading_button.active = False
         self.req_button.opacity = 1
