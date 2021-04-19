@@ -1,5 +1,5 @@
-import threading, speedtest, global_var as g
-
+import threading, global_var as g, speedtest_mod
+# Speedtest: https://pypi.org/project/speedtest-cli/
 from kivymd.app import MDApp
 from kivy.lang import Builder
 from kivymd.uix.label import MDLabel
@@ -28,8 +28,8 @@ class SpeedTest_Screen(Screen):
     def retSpeedTest(self):
         #g.speed_test_src, g.speed_test_host, g.speed_test_dl, g.speed_test_up = speedtest.main()
         st = speedtest.Speedtest()
-        print('Download Speed:',st.download()) #download speed
-        print('Upload Speed:',st.upload()) #upload speed
+        print('Download Speed:', round(st.download()/(10**6),2)) #download speed
+        print('Upload Speed:', round(st.upload()/(10**6),2)) #upload speed
         # g.speed_test_dl = st.download()
         # g.speed_test_up = st.upload()
         self.ret_speedtest.text = g.speed_test_src+"\n\n"+g.speed_test_host+"\n\n"+g.speed_test_dl+"\n\n"+g.speed_test_up
@@ -48,6 +48,7 @@ class MainApp(MDApp):
         self.theme_cls.primary_palette = "Blue"
         # self.theme_cls.theme_style = "Light"
         # print(portforwardlib.forwardPort(22,22,None,None,True,"TCP",9999, None,True))
+        print(speedtest.__file__)
         if platform =='android':
             print("Platform: Android")
             from android.permissions import Permission, request_permissions
