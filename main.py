@@ -27,11 +27,15 @@ class SpeedTest_Screen(Screen):
 
     def retSpeedTest(self):
         #g.speed_test_src, g.speed_test_host, g.speed_test_dl, g.speed_test_up = speedtest.main()
+        
+        # Create speedtest object
         st = speedtest_mod.Speedtest()
-        print('Download Speed:', round(st.download()/(10**6),2)) #download speed
-        print('Upload Speed:', round(st.upload()/(10**6),2)) #upload speed
-        # g.speed_test_dl = st.download()
-        # g.speed_test_up = st.upload()
+        g.speed_test_dl = str(round(st.download()/(10**6),2))
+        g.speed_test_up = str(round(st.upload()/(10**6),2))
+
+        print('Download Speed: '+g.speed_test_dl)
+        print('Upload Speed: '+g.speed_test_up)
+
         self.ret_speedtest.text = g.speed_test_src+"\n\n"+g.speed_test_host+"\n\n"+g.speed_test_dl+"\n\n"+g.speed_test_up
         self.loading_button.active = False
         self.req_button.opacity = 1
@@ -53,11 +57,6 @@ class MainApp(MDApp):
             from android.permissions import Permission, request_permissions
             request_permissions([Permission.INTERNET, Permission.ACCESS_NETWORK_STATE, Permission.ACCESS_WIFI_STATE, Permission.ACCESS_COARSE_LOCATION, Permission.ACCESS_FINE_LOCATION, Permission.WRITE_EXTERNAL_STORAGE, Permission.READ_EXTERNAL_STORAGE])
 
-            def callback (permission, results):
-                if all([res for res in results]):
-                    print("Got all permissions")
-                else:
-                    print ("Did not get all permissions")
         else:            
             print("Platform: Not Android")
 if __name__ == "__main__":
