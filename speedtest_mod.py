@@ -1,4 +1,4 @@
-# Modified for Python 3 disregarding depreciated code
+# Modified
 # Source: https://pypi.org/project/speedtest-cli/
 
 import os
@@ -38,7 +38,6 @@ class FakeShutdownEvent(object):
     def isSet():
         "Dummy method to always return false"""
         return False
-
 
 # Some global variables we use
 DEBUG = False
@@ -1350,59 +1349,59 @@ class Speedtest(object):
 
         return self.servers
 
-    def set_mini_server(self, server):
-        """Instead of querying for a list of servers, set a link to a
-        speedtest mini server
-        """
+    # def set_mini_server(self, server):
+    #     """Instead of querying for a list of servers, set a link to a
+    #     speedtest mini server
+    #     """
 
-        urlparts = urlparse(server)
+    #     urlparts = urlparse(server)
 
-        name, ext = os.path.splitext(urlparts[2])
-        if ext:
-            url = os.path.dirname(server)
-        else:
-            url = server
+    #     name, ext = os.path.splitext(urlparts[2])
+    #     if ext:
+    #         url = os.path.dirname(server)
+    #     else:
+    #         url = server
 
-        request = build_request(url)
-        uh, e = catch_request(request, opener=self._opener)
-        if e:
-            raise SpeedtestMiniConnectFailure('Failed to connect to %s' %
-                                              server)
-        else:
-            text = uh.read()
-            uh.close()
+    #     request = build_request(url)
+    #     uh, e = catch_request(request, opener=self._opener)
+    #     if e:
+    #         raise SpeedtestMiniConnectFailure('Failed to connect to %s' %
+    #                                           server)
+    #     else:
+    #         text = uh.read()
+    #         uh.close()
 
-        extension = re.findall('upload_?[Ee]xtension: "([^"]+)"',
-                               text.decode())
-        if not extension:
-            for ext in ['php', 'asp', 'aspx', 'jsp']:
-                try:
-                    f = self._opener.open(
-                        '%s/speedtest/upload.%s' % (url, ext)
-                    )
-                except Exception:
-                    pass
-                else:
-                    data = f.read().strip().decode()
-                    if (f.code == 200 and
-                            len(data.splitlines()) == 1 and
-                            re.match('size=[0-9]', data)):
-                        extension = [ext]
-                        break
-        if not urlparts or not extension:
-            raise InvalidSpeedtestMiniServer('Invalid Speedtest Mini Server: '
-                                             '%s' % server)
+    #     extension = re.findall('upload_?[Ee]xtension: "([^"]+)"',
+    #                            text.decode())
+    #     if not extension:
+    #         for ext in ['php', 'asp', 'aspx', 'jsp']:
+    #             try:
+    #                 f = self._opener.open(
+    #                     '%s/speedtest/upload.%s' % (url, ext)
+    #                 )
+    #             except Exception:
+    #                 pass
+    #             else:
+    #                 data = f.read().strip().decode()
+    #                 if (f.code == 200 and
+    #                         len(data.splitlines()) == 1 and
+    #                         re.match('size=[0-9]', data)):
+    #                     extension = [ext]
+    #                     break
+    #     if not urlparts or not extension:
+    #         raise InvalidSpeedtestMiniServer('Invalid Speedtest Mini Server: '
+    #                                          '%s' % server)
 
-        self.servers = [{
-            'sponsor': 'Speedtest Mini',
-            'name': urlparts[1],
-            'd': 0,
-            'url': '%s/speedtest/upload.%s' % (url.rstrip('/'), extension[0]),
-            'latency': 0,
-            'id': 0
-        }]
+    #     self.servers = [{
+    #         'sponsor': 'Speedtest Mini',
+    #         'name': urlparts[1],
+    #         'd': 0,
+    #         'url': '%s/speedtest/upload.%s' % (url.rstrip('/'), extension[0]),
+    #         'latency': 0,
+    #         'id': 0
+    #     }]
 
-        return self.servers
+    #     return self.servers
 
     def get_closest_servers(self, limit=5):
         """Limit servers to the closest speedtest.net servers based on
@@ -1667,33 +1666,6 @@ class Speedtest(object):
         )
         return self.results.upload
 
-
-def ctrl_c(shutdown_event):
-    """Catch Ctrl-C key sequence and set a SHUTDOWN_EVENT for our threaded
-    operations
-    """
-    def inner(signum, frame):
-        shutdown_event.set()
-        printer('\nCancelling...', error=True)
-        sys.exit(0)
-    return inner
-
-
-def version():
-    """Print the version"""
-
-    printer('speedtest-cli %s' % __version__)
-    printer('Python %s' % sys.version.replace('\n', ''))
-    sys.exit(0)
-
-
-def csv_header(delimiter=','):
-    """Print the CSV Headers"""
-
-    printer(SpeedtestResults.csv_header(delimiter=delimiter))
-    sys.exit(0)
-
-
 def parse_args():
     """Function to handle building and parsing of command line arguments"""
     description = (
@@ -1780,24 +1752,6 @@ def parse_args():
     return args
 
 
-def validate_optional_args(args):
-    """Check if an argument was provided that depends on a module that may
-    not be part of the Python standard library.
-
-    If such an argument is supplied, and the module does not exist, exit
-    with an error stating which module is missing.
-    """
-    optional_args = {
-        'json': ('json/simplejson python module', json),
-        'secure': ('SSL support', HTTPSConnection),
-    }
-
-    for arg, info in optional_args.items():
-        if getattr(args, arg, False) and info[1] is None:
-            raise SystemExit('%s is not installed. --%s is '
-                             'unavailable' % (info[0], arg))
-
-
 def printer(string, quiet=False, debug=False, error=False, **kwargs):
     """Helper function print a string with various features"""
 
@@ -1824,27 +1778,8 @@ def shell():
 
     global DEBUG
     shutdown_event = threading.Event()
-
-    # signal.signal(signal.SIGINT, ctrl_c(shutdown_event))
-
     args = parse_args()
-
-    # Print the version and exit
-    if args.version:
-        version()
-
-    if not args.download and not args.upload:
-        raise SpeedtestCLIError('Cannot supply both --no-download and '
-                                '--no-upload')
-
-    if len(args.csv_delimiter) != 1:
-        raise SpeedtestCLIError('--csv-delimiter must be a single character')
-
-    if args.csv_header:
-        csv_header(args.csv_delimiter)
-
-    validate_optional_args(args)
-
+    
     debug = getattr(args, 'debug', False)
     if debug == 'SUPPRESSHELP':
         debug = False
@@ -1960,26 +1895,6 @@ def shell():
     else:
         printer('Skipping upload test', quiet)
 
-    printer('Results:\n%r' % results.dict(), debug=True)
-
-    if not args.simple and args.share:
-        results.share()
-
-    if args.simple:
-        printer('Ping: %s ms\nDownload: %0.2f M%s/s\nUpload: %0.2f M%s/s' %
-                (results.ping,
-                 (results.download / 1000.0 / 1000.0) / args.units[1],
-                 args.units[0],
-                 (results.upload / 1000.0 / 1000.0) / args.units[1],
-                 args.units[0]))
-    elif args.csv:
-        printer(results.csv(delimiter=args.csv_delimiter))
-    elif args.json:
-        printer(results.json())
-
-    if args.share and not machine_format:
-        printer('Share results: %s' % results.share())
-
     src = str(results.client["isp"])+" ("+str(results.client["ip"])+")"
     host = str(results.server["sponsor"])+" ("+str(results.ping)+" ms"+")"
     dl = str(round(results.download/ 1000.0 / 1000.0, 2))+" Mbps"
@@ -1987,26 +1902,8 @@ def shell():
     return src, host, dl, up
 
 def main():
-    src, host, dl, up =  "", "", "", ""
-    
-    try:
-        src, host, dl, up = shell()
-        return src, host, dl, up
-
-    except KeyboardInterrupt:
-        printer('\nCancelling...', error=True)
-        return src, host, dl, up
-
-    except (SpeedtestException, SystemExit):
-        e = get_exception()
-        # Ignore a successful exit, or argparse exit
-        if getattr(e, 'code', 1) not in (0, 2):
-            msg = '%s' % e
-            if not msg:
-                msg = '%r' % e
-            return src, host, dl, up
-            raise SystemExit('ERROR: %s' % msg)
-        return src, host, dl, up
+    src, host, dl, up = shell()
+    return src, host, dl, up
 
 if __name__ == '__main__':
     main()
