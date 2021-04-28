@@ -26,12 +26,12 @@ class SpeedTest_Screen(Screen):
         print(f"ret : {g.speed_test_src}, {g.speed_test_host}, {g.speed_test_dl}, {g.speed_test_up}")
 
     def retSpeedTest(self):
-        #g.speed_test_src, g.speed_test_host, g.speed_test_dl, g.speed_test_up = speedtest.main()
+        g.speed_test_src, g.speed_test_host, g.speed_test_dl, g.speed_test_up = speedtest_mod.main()
         
         # Create speedtest object
-        st = speedtest_mod.Speedtest()
-        g.speed_test_dl = str(round(st.download()/(10**6),2))
-        g.speed_test_up = str(round(st.upload()/(10**6),2))
+        # st = speedtest_mod.Speedtest()
+        # g.speed_test_dl = str(round(st.download()/(10**6),2))
+        # g.speed_test_up = str(round(st.upload()/(10**6),2))
 
         print('Download Speed: '+g.speed_test_dl)
         print('Upload Speed: '+g.speed_test_up)
