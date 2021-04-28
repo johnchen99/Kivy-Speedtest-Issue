@@ -1,0 +1,24 @@
+04-28 21:28:06.803 23393 23604 I python  : ret : N/A, N/A, N/A, N/A
+04-28 21:28:06.848 23393 23900 I python  : Retrieving speedtest.net configuration...
+04-28 21:28:06.863 23393 23900 I python  :  Cannot retrieve speedtest configuration1
+04-28 21:28:06.864 23393 23900 I python  :  Exception in thread Thread-1:
+04-28 21:28:06.865 23393 23900 I python  :  Traceback (most recent call last):
+04-28 21:28:06.866 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/app/speedtest_mod.py", line 1807, in shell
+04-28 21:28:06.867 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/app/speedtest_mod.py", line 1081, in __init__
+04-28 21:28:06.869 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/app/speedtest_mod.py", line 597, in build_opener
+04-28 21:28:06.915 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/app/speedtest_mod.py", line 666, in build_user_agent
+04-28 21:28:06.916 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/platform/build-armeabi-v7a/build/other_builds/python3/armeabi-v7a__ndk_target_21/python3/Lib/platform.py", line 1205, in platform
+04-28 21:28:06.917 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/platform/build-armeabi-v7a/build/other_builds/python3/armeabi-v7a__ndk_target_21/python3/Lib/platform.py", line 193, in libc_ver
+04-28 21:28:06.919 23393 23900 I python  :  IsADirectoryError: [Errno 21] Is a directory: '/data/data/org.test.speedtest/files/app'
+04-28 21:28:06.919 23393 23900 I python  :  
+04-28 21:28:06.935 23393 23900 I python  :  During handling of the above exception, another exception occurred:
+04-28 21:28:06.936 23393 23900 I python  :  
+04-28 21:28:06.937 23393 23900 I python  :  Traceback (most recent call last):
+04-28 21:28:06.948 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/platform/build-armeabi-v7a/build/other_builds/python3/armeabi-v7a__ndk_target_21/python3/Lib/threading.py", line 932, in _bootstrap_inner
+04-28 21:28:06.972 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/platform/build-armeabi-v7a/build/python-installs/speedtest/jnius/__init__.py", line 84, in jnius_thread_hook
+04-28 21:28:06.984 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/platform/build-armeabi-v7a/build/other_builds/python3/armeabi-v7a__ndk_target_21/python3/Lib/threading.py", line 870, in run
+04-28 21:28:06.990 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/app/main.py", line 29, in retSpeedTest
+04-28 21:28:07.007 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/app/speedtest_mod.py", line 1905, in main
+04-28 21:28:07.009 23393 23900 I python  :    File "/home/icdn/speedtest_test/.buildozer/android/app/speedtest_mod.py", line 1814, in shell
+04-28 21:28:07.012 23393 23900 I python  :  speedtest_mod.SpeedtestCLIError: [Errno 21] Is a directory: '/data/data/org.test.speedtest/files/app'
+
